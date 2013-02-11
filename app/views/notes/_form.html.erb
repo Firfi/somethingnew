@@ -1,0 +1,16 @@
+<%= form_for(@note) do |n| %>
+
+    <%= render "shared/error_messages", :target => @note %>
+
+    <div class="field">
+        <%= n.label :content %><br />
+        <%= n.text_area :content %>
+    </div>
+    <div class="field">
+        <%= n.label :tag_list %><br />
+        <%= n.text_field :tag_list %>
+    </div>
+    <div class="actions">
+        <%= n.submit %>
+    </div>
+<% end %>

@@ -1,0 +1,11 @@
+<%= render 'new' %>
+<div id="notes">
+    <% @notes.each do |note| %>
+        <%= simple_format note.content %>
+        <p>
+            Tags: <%= raw note.tags.map(&:name).map { |tn| link_to tn, tag_path(tn) }.join(', ') %>
+        </p>
+        <p><%= link_to 'Edit', edit_note_path(note) %></p>
+        <p><%= link_to 'Destroy', note, :method => :delete %></p>
+    <% end %>
+</div>
