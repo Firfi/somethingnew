@@ -1,4 +1,5 @@
 <%= render 'new' %>
+<%= page_title %>
 <div id="notes">
     <% @notes.each do |note| %>
         <%= simple_format note.content %>

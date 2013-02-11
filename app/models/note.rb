@@ -1,7 +1,7 @@
 class Note < ActiveRecord::Base
   attr_accessible :content, :tag_list
   validates_presence_of :content, :tag_list
-  has_one :user
+  belongs_to :user
   has_many :taggings
   has_many :tags, through: :taggings
 
