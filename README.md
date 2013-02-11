@@ -1,0 +1,1 @@
+somethingnew is pilot name for GTD web application about what and when you learned. User can make notes about new things that he learned today for repetition in the future or as drafts for his blog notes
