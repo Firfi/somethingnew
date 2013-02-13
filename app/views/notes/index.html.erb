@@ -1,12 +1,13 @@
-<%= render 'new' %>
-<%= page_title %>
+<h1>Notes</h1>
+
+<%= render 'form' %>
+
 <div id="notes">
     <% @notes.each do |note| %>
-        <%= simple_format note.content %>
-        <p>
-            Tags: <%= raw note.tags.map(&:name).map { |tn| link_to tn, tag_path(tn) }.join(', ') %>
-        </p>
-        <p><%= link_to 'Edit', edit_note_path(note) %></p>
-        <p><%= link_to 'Destroy', note, :method => :delete %></p>
+        <div class="info">
+            <%= note.created_at.strftime('%b %d, %Y') %>
+        </div>
+        <div class="content"><%= note.content %></div>
+        <div class="delete"><%= link_to :destroy, note_path(note), :method => :delete %></div>
     <% end %>
 </div>

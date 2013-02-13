@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '~> 3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -20,13 +20,24 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem "rspec-rails", :group => [:test, :development]
+gem 'pry-rails', :group => :development
+group :test do
+  gem "factory_girl_rails", "~> 4.0"
+  gem "capybara"
+  gem "guard-rspec"
+end
+
+group :development do
+  gem "binding_of_caller"
+  gem "better_errors"
+  gem "meta_request"
+end
+
 gem 'jquery-rails'
 
-gem 'devise'
-gem 'milia'
-
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

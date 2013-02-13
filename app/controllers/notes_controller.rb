@@ -1,34 +1,41 @@
 class NotesController < ApplicationController
-  before_filter :authenticate_user!
-  def index
-    if params[:tag]
-      @notes = Note.tagged_with(params[:tag])
-    else
-      @notes = Note.all
-    end
+  before_filter :authorize
+  before_filter :init, :only => [:index]
 
-    @note = Note.new
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @notes}
-      format.json { render :json => @notes}
-    end
+  def index
   end
+
   def create
-    @note = Note.new(params[:note])
-    respond_to do |format|
-      if @note.save
-        format.html { redirect_to :back, :notice => 'Note was successfully created.' }
-        format.xml  { render :xml => @note, :status => :created, :location => @user }
-      else
-        @notes = Note.all
-        format.html { render :action => 'index' }
-        format.xml  { render :xml => @note.errors, :status => :unprocessable_entity }
-      end
+    if current_user.notes.new(params[:note]).save
+      flash[:notice] = "New note created"
+    end
+    redirect_to :notes
+  end
+
+  def edit
+    @note = current_user.notes.find(params[:id])
+  end
+
+  def update
+    @note = current_user.notes.find(params[:id])
+    if @note.update_attributes(params[:note])
+      redirect_to @note, notice: "Note has been updated."
+    else
+      render "edit"
     end
   end
+
   def destroy
-    Note.destroy params[:id]
-    redirect_to :back, notice: 'Note moved to trash.'
+    @note = current_user.notes.find(params[:id])
+    @note.destroy
+    redirect_to :notes
   end
+
+  private
+
+  def init
+    @notes = current_user.notes.all
+    @note = current_user.notes.new
+  end
+
 end

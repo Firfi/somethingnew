@@ -1,6 +1,24 @@
 Somethingnew::Application.routes.draw do
 
-  devise_for :users #, :controllers => { :sessions => "userssessions" }
+  get 'signup', to: 'users#new', as: 'signup'
+  post 'signup', to: 'users#create', as: 'signup'
+  get 'login', to: 'sessions#new', as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
+  put 'update_password', to: 'password_resets#update', as: 'update_password'
+  get 'password_reset', to: 'password_resets#new', as: 'password_reset'
+  post 'password_reset', to: 'password_resets#create', as: 'password_reset'
+  get 'password_edit/:token', to: 'password_resets#edit', as: 'password_edit'
+  post 'try_me', to: 'users#guest', as: 'try_me'
+
+  root to: 'main#index'
+
+  resources :sessions
+  resources :password_confirms
+
+  resources :notes
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -13,9 +31,8 @@ Somethingnew::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
-  #Sample resource route (maps HTTP verbs to controller actions automatically):
-  #get 'notes/:tag', to: 'notes#index', as: :tag
-  resources :notes
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   resources :products
 
   # Sample resource route with options:
   #   resources :products do
@@ -52,8 +69,6 @@ Somethingnew::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'notes#index'
-
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

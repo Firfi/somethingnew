@@ -2,17 +2,4 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  activerecord:
-    attributes:
-      user:
-        name: "Username"
-    errors:
-      models:
-        user:
-          attributes:
-            name:
-              invalid: "should start from letter and contain only letters, dots, dashes and underscores"
-
-  notes:
-    index:
-      title: "Notes"
+  hello: "Hello world"
