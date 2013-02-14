@@ -7,6 +7,6 @@ describe "password_resets/new.html.erb" do
   end
   it "displays 'Reset Password' message" do
     render
-    expect(rendered).to match("Reset Password")
+    expect(rendered).to match(t('user.password.reset.button'))
   end
 end

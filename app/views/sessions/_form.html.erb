@@ -1,16 +1,26 @@
-<%= form_tag sessions_path do %>
-    <div class="field">
-        <%= label_tag :email %><br />
+<%= form_tag sessions_path, :class => "form-horizontal" do %>
+<div class="control-group">
+    <%= label_tag :email, nil, :class => "control-label" %>
+    <div class="controls">
         <%= text_field_tag :email, params[:email] %>
     </div>
-    <div class="field">
-        <%= label_tag :password %><br />
+</div>
+<div class="control-group">
+    <%= label_tag :password, nil, :class => "control-label" %>
+    <div class="controls">
         <%= password_field_tag :password %>
     </div>
-    <p><%= link_to "forgotten password?", password_reset_path %></p>
-    <div class="field">
-        <%= label_tag :remember_me %>
-        <%= check_box_tag :remember_me, 1, params[:remember_me] %>
+    <div class="controls">
+        <%= link_to t('user.password.forgot.link'), password_reset_path %>
     </div>
-    <div class="actions"><%= submit_tag "Log In" %></div>
+</div>
+<div class="control-group">
+    <div class="controls">
+        <label class="checkbox">
+            <%= check_box_tag :remember_me, 1, params[:remember_me] %> <%= t('remember.me') %>
+        </label>
+        <%= submit_tag t('user.login'), :class => "btn" %>
+    </div>
+</div>
+
 <% end %>

@@ -5,16 +5,16 @@ class PasswordResetsController < ApplicationController
   def create
     user = User.find_by_email(params[:email])
     user.send_password_reset if user
-    redirect_to root_url, :notice => "Email sent with password reset instructions on email: #{params[:email]} "
+    redirect_to root_url, :notice => t('user.email.reset_sent', :email => params[:email])
   end
 
   def edit
-    # init in filter
+    # validate in before_filter after that render edit form
   end
 
   def update
     if @user.update_password(params[:user])
-      redirect_to root_url, :notice => "Password has been reset."
+      redirect_to root_url, :notice => t('user.password.has_been_reset')
     else
       render :edit
     end
@@ -24,20 +24,19 @@ class PasswordResetsController < ApplicationController
 
   def validate
     @token = params[:token]
-    @user = User.awaiting_activation.find_by_password_reset_token(@token)
+    @user = User.awaiting_reactivation.find_by_password_reset_token(@token)
     if @user
-      if @user.password_reset_sent_at < 2.hours.ago
+      if @user.password_reset_sent_at < Somethingnew::Application.config.password_token_expire_time.ago
         @user.expire_password_reset_token
-        expired_message
+        expired_redirect
       end
     else
-      expired_message
+      expired_redirect
     end
   end
 
-  def expired_message
-    redirect_to password_reset_path, :alert => "Password reset token has been expired"
+  def expired_redirect
+    redirect_to password_reset_path, :alert => t('user.password.token.expired')
   end
-
 
 end

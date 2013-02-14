@@ -2,4 +2,59 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  user:
+    signup: "Sign Up"
+    login: "Log In"
+    logout: "Log Out"
+    guest:
+      become_member: "Become a member"
+      name: "Guest"
+    created:
+      check_email: "User created. Check your email for confirmation message"
+    email:
+      confirmed: "Your account has been confirmed. You can login now using your password"
+      confirmation_error: "Error in password confirmation"
+      reset_sent: "Email sent with password reset instructions on email: %{email}"
+      subject:
+        password_reset: "Password Reset"
+        password_confirm: "Password Confirm"
+    password:
+      has_been_reset: "Password has been reset"
+      token:
+        expired: "Password reset token has been expired"
+      update:
+        button: "Update Password"
+      reset:
+        button: "Reset Password"
+      forgot:
+        link: "forgotten password?"
+    logged:
+      in:
+        as: "Logged in as %{name}"
+  note:
+   created: "New note created"
+   updated: "Note has been updated"
+   notes: "Notes"
+  session:
+    password:
+      not:
+        confirmed: "Email or password is invalid or user is not confirmed yet"
+    logged:
+      in: "Logged in!"
+      out: "Logged out!"
+    not:
+      authorized: "Not authorized"
+  error:
+    generic:
+      message: "Error"
+  node:
+    prohibited_from_save: "prohibited this note from being saved"
+  try:
+    it:
+      free: "Try it for free!"
+  activerecord:
+    errors:
+      messages:
+        confirmation: "does not match"
+  remember:
+    me: "Remember me"

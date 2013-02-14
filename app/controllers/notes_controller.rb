@@ -1,4 +1,9 @@
 class NotesController < ApplicationController
+
+  include NotesHelper
+
+  respond_to :html
+
   before_filter :authorize
   before_filter :init, :only => [:index]
 
@@ -6,27 +11,32 @@ class NotesController < ApplicationController
   end
 
   def create
-    if current_user.notes.new(params[:note]).save
-      flash[:notice] = "New note created"
+    @note = current_notes.new(params[:note])
+    if @note.save
+      flash[:notice] = t('note.created')
+      redirect_to :notes
+    else
+      @notes = current_notes
+      render :index
     end
-    redirect_to :notes
+
   end
 
   def edit
-    @note = current_user.notes.find(params[:id])
+    @note = current_notes.find(params[:id])
   end
 
   def update
-    @note = current_user.notes.find(params[:id])
+    @note = current_notes.find(params[:id])
     if @note.update_attributes(params[:note])
-      redirect_to @note, notice: "Note has been updated."
+      redirect_to @note, notice: t('note.updated')
     else
-      render "edit"
+      render 'edit'
     end
   end
 
   def destroy
-    @note = current_user.notes.find(params[:id])
+    @note = current_notes.find(params[:id])
     @note.destroy
     redirect_to :notes
   end
@@ -34,8 +44,8 @@ class NotesController < ApplicationController
   private
 
   def init
-    @notes = current_user.notes.all
-    @note = current_user.notes.new
+    @notes = current_notes
+    @note = current_notes.new
   end
 
 end

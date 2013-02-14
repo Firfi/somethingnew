@@ -1,5 +1,12 @@
 Somethingnew::Application.routes.draw do
 
+
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      resources :notes
+    end
+  end
+
   get 'signup', to: 'users#new', as: 'signup'
   post 'signup', to: 'users#create', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'

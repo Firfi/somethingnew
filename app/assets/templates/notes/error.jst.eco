@@ -1,0 +1,8 @@
+<% for field of @errors: %>
+    <% for msg in @errors[field]['message']: %>
+        <div class="alert alert-error fade in">
+            <a class="close" data-dismiss="alert">&#215;</a>
+            <div class="flash-<%= field %>" ><strong><%= @errors[field]['label'] %></strong> <%= msg %></div>
+        </div>
+    <% end %>
+<% end %>

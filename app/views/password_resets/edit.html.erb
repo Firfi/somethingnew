@@ -1,16 +1,7 @@
-<h1>Reset Password</h1>
+<legend><%= t('user.password.reset.button') %></legend>
 
 <%= form_for @user, :url => update_password_path do |f| %>
-    <% if @user.errors.any? %>
-        <div class="error_messages">
-            <h2>Form is invalid</h2>
-            <ul>
-                <% for message in @user.errors.full_messages %>
-                    <li><%= message %></li>
-                <% end %>
-            </ul>
-        </div>
-    <% end %>
+    <%= render 'shared/error_messages', :target => @user %>
     <div class="field">
         <%= f.label :password %>
         <%= f.password_field :password %>
@@ -20,5 +11,5 @@
         <%= f.password_field :password_confirmation %>
     </div>
     <%= hidden_field_tag :token, @token %>
-    <div class="actions"><%= f.submit "Update Password" %></div>
+    <div class="actions"><%= f.submit t('user.password.update.button'), :class => "btn" %></div>
 <% end %>

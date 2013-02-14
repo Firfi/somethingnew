@@ -2,27 +2,51 @@
 <html>
 <head>
     <title>Somethingnew</title>
-    <%= stylesheet_link_tag    "application", media: "all" %>
-    <%= javascript_include_tag "application" %>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div id="container">
-    <div id="user_header">
-        <% if current_user %>
-            Logged in as <strong><%= current_user.name %></strong>.
-            <%= link_to "Log Out", logout_path %>
-        <% else %>
-            <%= link_to "Sign Up", signup_path %> or
-            <%= link_to "Log In", login_path %>
-        <% end %>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">Somethingnew</a>
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                    <% if current_user %>
+
+                        <li><%= link_to t('user.logout'), logout_path %></li>
+                        <% if current_user.guest? %>
+                            <li><%= link_to t('user.guest.become_member'), signup_path %></li>
+                        <% end %>
+                        <li><%= raw t('user.logged.in.as', :name => "<strong>#{current_user.template_name.html_safe}</strong>") %></li>
+                    <% else %>
+                        <li><%= link_to t('user.signup'), signup_path %></li>
+                        <li><%= link_to t('user.login'), login_path %></li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
     </div>
 
+</div>
+<div class="container">
     <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, id: "flash_#{name}" %>
+        <% if msg.is_a?(String) %>
+            <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+                <a class="close" data-dismiss="alert">&#215;</a>
+                <%= content_tag :div, msg, :id => "flash_#{name}" %>
+            </div>
+        <% end %>
     <% end %>
 
     <%= yield %>
+
+
 </div>
 </body>
 </html>

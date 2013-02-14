@@ -1,0 +1,1 @@
+Somethingnew::Application.config.password_token_expire_time = 2.hour

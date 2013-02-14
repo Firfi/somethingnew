@@ -1,13 +1,28 @@
-<h1>Notes</h1>
-
-<%= render 'form' %>
+<legend><%= t('note.notes') %></legend>
 
 <div id="notes">
-    <% @notes.each do |note| %>
-        <div class="info">
-            <%= note.created_at.strftime('%b %d, %Y') %>
-        </div>
-        <div class="content"><%= note.content %></div>
-        <div class="delete"><%= link_to :destroy, note_path(note), :method => :delete %></div>
-    <% end %>
+    <% if request[:static] %>
+        <%= render 'form' %>
+        <table class="table">
+            <tr>
+                <th>Date</th>
+                <th>Content</th>
+                <th>Tags</th>
+                <th>Actions</th>
+            </tr>
+            <% @notes.each do |note| %>
+                <tr class="note">
+                    <td class="info">
+                        <%= note.created_at.strftime('%b %d, %Y') %>
+                    </td>
+                    <td class="content"><%= note.content %></td>
+                    <td><%= note.tag_list %></td>
+                    <td class="delete"><%= link_to :destroy, note_path(note), :method => :delete, :class => "btn btn-danger btn-mini" %></td>
+                </tr>
+            <% end %>
+        </table>
+    <% else %>
+        <%= render 'json_data' %>
+    <% end  %>
 </div>
+

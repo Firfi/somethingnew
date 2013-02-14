@@ -6,10 +6,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      flash[:notice] = "User created. Check your email for confirmation message"
+      if current_user && current_user.guest?
+        current_user.move_to(@user)
+        destroy_guest
+      end
+      flash[:notice] = t('user.created.check_email')
       redirect_to root_url
     else
-      render "new"
+      render 'new'
     end
   end
 
@@ -19,7 +23,7 @@ class UsersController < ApplicationController
       cookies[:auth_token] = @user.auth_token
       redirect_to root_url
     else
-      render "new"
+      render 'new'
     end
   end
 
