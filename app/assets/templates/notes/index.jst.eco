@@ -9,7 +9,7 @@
     </div>
     <div class="field">
         <label for="note_tag_list">Tags (separated by commas)</label>
-        <input id="note_tag_list" name="tag_list" size="30" type="text" value="">
+        <input id="note_tag_list" class="typeahead" name="tag_list" size="30" type="text" value="">
     </div>
     <div class="actions">
         <input class="btn" name="commit" type="submit" value="Create Note">

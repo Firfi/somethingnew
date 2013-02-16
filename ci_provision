@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+export DEBIAN_FRONTEND=noninteractive
+
+echo 'deb http://packages.linuxmint.com debian import' | sudo tee -a /etc/apt/sources.list
+sudo apt-get update > /dev/null
+
+
+sudo apt-get -y install build-essential git-core zip unzip openssl libssl-dev libopenssl-ruby xvfb firefox chromium-browser libxml2-dev libxslt1-dev
+
+# furryfox reqs
+sudo apt-get -y install xulrunner-1.9.1
+sudo ldconfig
+
+# nokogiri requirements
+sudo apt-get -y install libxslt-dev libxml2-dev
+
+# pg requirements
+sudo apt-get -y install libpq-dev
+
+# rake
+sudo apt-get -y install libreadline-dev
+
+#chrome
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo apt-get -f install
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+rm google-chrome-stable_current_amd64.deb
+
+
+sudo curl -L https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
+
+text='if [ -d $HOME/.rbenv ]; then export PATH="$HOME/.rbenv/bin:$PATH" eval "$(rbenv init -)" fi'
+exec 3<> ~/.bashrc && awk -v TEXT="$text" 'BEGIN {print TEXT}{print}' ~/.bashrc >&3
+
+. ~/.bashrc
+
+rbenv install 1.9.3-p194
+rbenv rehash
+gem install bundler
+rbenv rehash
+
+gem install pry
+
+mkdir -p /home/vagrant/downloads
+mkdir -p /home/vagrant/bin
+sudo chown -R vagrant:vagrant /home/vagrant/bin
+
+if [ "$GUI" == "headless" ]; then
+  echo "GUI is already set to headless"
+else
+  echo "export GUI=\"headless\"" >> /home/vagrant/.profile
+  echo "export GUI=\"headless\"" >> /home/vagrant/.zshenv
+fi
+
+if [ -f "/home/vagrant/bin/chromedriver" ]; then
+  echo "Chromedriver already installed"
+else
+  echo "export PATH=\"/home/vagrant/bin:$PATH\"" >> /home/vagrant/.profile
+  echo "export PATH=\"/home/vagrant/bin:$PATH\"" >> /home/vagrant/.zshenv
+  wget -q http://chromedriver.googlecode.com/files/chromedriver_linux64_21.0.1180.4.zip
+  unzip chromedriver_linux64_21.0.1180.4.zip
+  chown vagrant:vagrant chromedriver && mv chromedriver /home/vagrant/bin/chromedriver
+fi
+

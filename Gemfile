@@ -28,12 +28,20 @@ group :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'capybara'
   gem 'guard-rspec'
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'headless'
+
+  gem 'rb-readline'
+
+  gem 'poltergeist', :git => 'git://github.com/jonleighton/poltergeist.git'
+
 end
 
 group :development do
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'meta_request'
+  gem 'annotate', ">=2.5.0"
 end
 
 gem 'jquery-rails'

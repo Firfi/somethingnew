@@ -9,5 +9,5 @@ window.Somethingnew =
 
 
 $(document).ready ->
-  return if window.location.pathname == '/' # this shit reacts on root path too for some reason
+  return if window.location.pathname.indexOf('/notes') isnt 0 # this shit reacts on root path too for some reason
   Somethingnew.init()

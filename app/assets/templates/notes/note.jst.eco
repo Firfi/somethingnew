@@ -1,5 +1,4 @@
 <td class="info">
-    <%= console.warn @note.get('created_at') %>
     <%= strftime('%b %d, %Y', new Date(@note.get('created_at'))) %>
 </td>
 <td class="content"><%= @note.get('content') %></td>

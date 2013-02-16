@@ -6,13 +6,9 @@ module Api
 
       respond_to :json
 
+
       def index
-        @notes = current_notes
-        respond_with(current_notes) do |format|
-          format.json {
-            render :json => to_json(@notes)
-          }
-        end
+        respond_with current_notes
       end
 
       def show
@@ -20,7 +16,9 @@ module Api
       end
 
       def create
-        respond_with current_notes.create(params[:note])
+        @note = current_notes.create(params[:note])
+        respond_with @note
+
       end
 
       def update
@@ -31,6 +29,13 @@ module Api
         respond_with current_notes.destroy(params[:id])
       end
 
+      private
+
+      def respond_note(notess)
+        respond_with notess do |format|
+          format.json { render :json => to_json(notess) }
+        end
+      end
     end
   end
 end

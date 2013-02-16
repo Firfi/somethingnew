@@ -58,3 +58,5 @@ en:
         confirmation: "does not match"
   remember:
     me: "Remember me"
+  form:
+    prohibited_from_save: "prohibited this form from being saved"

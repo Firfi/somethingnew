@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/jonleighton/poltergeist.git
+  revision: 467c9b9ea0798e44518dab60c8ae45819daae637
+  specs:
+    poltergeist (1.0.2)
+      capybara (~> 2.0, >= 2.0.1)
+      faye-websocket (~> 0.4, >= 0.4.4)
+      http_parser.rb (~> 0.5.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -28,6 +37,8 @@ GEM
     activesupport (3.2.12)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    annotate (2.5.0)
+      rake
     arel (3.0.2)
     backbone-on-rails (0.9.10.0)
       eco
@@ -67,6 +78,7 @@ GEM
     eco-source (1.1.0.rc.1)
     ejs (1.1.1)
     erubis (2.7.0)
+    eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.2.0)
@@ -74,6 +86,8 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    faye-websocket (0.4.7)
+      eventmachine (>= 0.12.0)
     ffi (1.3.1)
     guard (1.6.2)
       listen (>= 0.6.0)
@@ -84,7 +98,9 @@ GEM
     guard-rspec (2.4.0)
       guard (>= 1.1)
       rspec (~> 2.11)
+    headless (1.0.0)
     hike (1.2.1)
+    http_parser.rb (0.5.3)
     i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (2.2.1)
@@ -143,6 +159,8 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (10.0.3)
+    rb-fsevent (0.9.3)
+    rb-readline (0.4.2)
     rdoc (3.12.1)
       json (~> 1.4)
     ref (1.0.2)
@@ -203,6 +221,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate (>= 2.5.0)
   backbone-on-rails
   backbone-syphon-rails
   bcrypt-ruby (~> 3.0.0)
@@ -212,12 +231,16 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   factory_girl_rails (~> 4.0)
   guard-rspec
+  headless
   jquery-rails
   less-rails
   meta_request
   pg
+  poltergeist!
   pry-rails
   rails (~> 3.2.11)
+  rb-fsevent
+  rb-readline
   rspec-rails
   sass-rails
   therubyracer

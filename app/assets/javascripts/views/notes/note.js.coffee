@@ -2,6 +2,7 @@ class Somethingnew.Views.Note extends Backbone.View
 
   template: JST['notes/note']
   tagName: 'tr'
+  className: 'note'
 
   events: ->
     'click .delete': 'deleteNote'

@@ -3,6 +3,11 @@ require 'spec_helper'
 password_reset_expire_time = Somethingnew::Application.config.password_token_expire_time
 
 describe "PasswordResets" do
+
+  before :each do
+    reset_email
+  end
+
   it "emails user when requesting password reset" do
     user = FactoryGirl.create(:user)
     visit login_path

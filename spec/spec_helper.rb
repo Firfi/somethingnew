@@ -4,10 +4,27 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
+require 'headless'
+require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
+
+ENV["CAPYBARA_DRIVER"] ||= "poltergeist"
+# Set the default driver to CAPYBARA_DRIVER, when you change the driver in one
+# of your tests resetting it to the default will ensure that its reset to what
+# you specified when starting the tests.
+# Capybara.default_driver = ENV["CAPYBARA_DRIVER"].to_sym
+Capybara.javascript_driver = ENV["CAPYBARA_DRIVER"].to_sym
+
+Capybara.register_driver :selenium_chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+
+Capybara.server_port = 3005
+
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -38,6 +55,16 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.include Capybara::DSL, :type => :request
-  config.before(:each) { reset_email }
+  config.before(:each) {
+    if ENV["GUI"] == "headless"
+      @headless = Headless.new
+      @headless.start
+    end
+  }
+  config.after(:each) {
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  }
+
 
 end

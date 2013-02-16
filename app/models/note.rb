@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: notes
+#
+#  id         :integer          not null, primary key
+#  content    :text
+#  user_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Note < ActiveRecord::Base
   attr_accessible :content, :user_id, :tag_list
 
@@ -22,8 +33,16 @@ class Note < ActiveRecord::Base
   end
 
   def tag_list=(names)
-    self.tags = names.split(",").map do |n|
-      Tag.where(name: n.strip).first_or_create!
+    self.tags = self.class.filter_tags names
+  end
+
+  def to_json(options = {})
+    super(options.merge(:methods => [:tag_list]))
+  end
+
+  def self.filter_tags(tag_string)
+    tag_string.split(",").map { |n| Tag.sanitize_name(n) }.inject([]) { |a, n| a << n unless n.blank?; a }.map do |n|
+      Tag.where(name: n).first_or_create!
     end
   end
 

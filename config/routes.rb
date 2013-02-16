@@ -4,6 +4,7 @@ Somethingnew::Application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
       resources :notes
+      get 'tags/autocomplete(/:query)', :controller => :tags, :action => :autocomplete
     end
   end
 
