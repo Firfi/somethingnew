@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   include Guestable
   include Mailable
 
-  has_many :notes, :dependent => :delete_all
+  has_many :notes, :dependent => :delete_all, :order => 'created_at asc'
   has_many :tags, :through => :notes
 
   attr_accessible :username, :email

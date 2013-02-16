@@ -38,7 +38,7 @@ class Somethingnew.Views.NotesIndex extends Backbone.View
 
   appendNote: (note) ->
     view = new Somethingnew.Views.Note(model: note)
-    $('#notes table').append(view.render().el)
+    $('#notes table tr:first').after(view.render().el)
 
   mkPrettyErrors: (errors) ->
     pretty_errors = {}

@@ -36,7 +36,7 @@ class Note < ActiveRecord::Base
     self.tags = self.class.filter_tags names
   end
 
-  def to_json(options = {})
+  def as_json(options = {})
     super(options.merge(:methods => [:tag_list]))
   end
 

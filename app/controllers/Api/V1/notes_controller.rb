@@ -17,8 +17,12 @@ module Api
 
       def create
         @note = current_notes.create(params[:note])
+        if @note
+          @note.tags.each do |tag|
+            tag.name.split('').inject('') {|t, s| t << s; Rails.cache.delete(["tags", @note.user_id, t]); t}
+          end
+        end
         respond_with @note
-
       end
 
       def update
@@ -29,13 +33,6 @@ module Api
         respond_with current_notes.destroy(params[:id])
       end
 
-      private
-
-      def respond_note(notess)
-        respond_with notess do |format|
-          format.json { render :json => to_json(notess) }
-        end
-      end
     end
   end
 end

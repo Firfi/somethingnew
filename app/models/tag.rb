@@ -22,7 +22,12 @@ class Tag < ActiveRecord::Base
   end
 
   def self.tags_for(user, prefix)
-    user.tags.select(:name).where(arel_table[:name].matches("#{prefix}%")).uniq.map(&:name)
+    logger.warn(prefix)
+    Rails.cache.fetch(["tags", user.id, prefix]) do
+      tgs = user.tags.where(arel_table[:name].matches("#{prefix}%")).uniq.pluck(:name)
+      logger.warn tgs
+      tgs
+    end
   end
 
   def self.sanitize_name(n)

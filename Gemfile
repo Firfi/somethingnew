@@ -42,6 +42,7 @@ group :development do
   gem 'better_errors'
   gem 'meta_request'
   gem 'annotate', ">=2.5.0"
+  gem 'rack-mini-profiler'
 end
 
 gem 'jquery-rails'
